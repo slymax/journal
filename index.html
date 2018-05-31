@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="app.frontend">
+  <head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <meta name="theme-color" content="#ffffff">
+
+    <meta ng-bind="title" content="Standard Notes" name="apple-mobile-web-app-title"/>
+    <meta ng-bind="title" content="Standard Notes" name="application-name"/>
+
+    <title>Journal</title>
+    <meta name="description" content="Standard Notes is a basic notes app that delivers only the essentials in note taking. Because of its simplicity and resistance to growth, users can count on durability and convenience."/>
+
+    <meta name="twitter:title" content="Standard Notes, a private and secure notes app."/>
+    <meta name="twitter:description" content="Standard Notes is a basic notes app that delivers only the essentials in note taking. Because of its simplicity and resistance to growth, users can count on durability and convenience."/>
+    <meta name="twitter:site" content="@standardnotes"/>
+    <meta name="twitter:card" content="summary"/>
+
+    <meta name="og:title" content="Standard Notes, a private and secure notes app."/>
+    <meta name="og:description" content="Standard Notes is a basic notes app that delivers only the essentials in note taking. Because of its simplicity and resistance to growth, users can count on durability and convenience."/>
+
+    <script>
+      window._default_sf_server = "";
+    </script>
+
+    <script src="script.js" debug="true"></script>
+    <link rel="stylesheet" media="all" href="style.css" debug="false" />
+
+  </head>
+
+  <body>
+    <div ng-controller="HomeCtrl" ng-include="'frontend/home.html'"></div>
+  </body>
+
+</html>
