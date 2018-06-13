@@ -46,9 +46,6 @@ angular.module('app')
 
     this.loadPreferences = function() {
       let width = authManager.getUserPrefValue("tagsPanelWidth");
-      if(width) {
-        this.panelController.setWidth(width);
-      }
     }
 
     this.loadPreferences();

@@ -516,7 +516,7 @@ class AccountMenu {
 
     $scope.encryptionStatusForNotes = function() {
       var length = $scope.notesAndTagsCount();
-      return length + "/" + length + " notes and tags encrypted";
+      return length + "/" + length + " notes encrypted.";
     }
 
     $scope.encryptionEnabled = function() {

@@ -254,11 +254,8 @@ class Item {
         var locale = (navigator.languages && navigator.languages.length) ? navigator.languages[0] : navigator.language;
         dateFormatter = new Intl.DateTimeFormat(locale, {
           year: 'numeric',
-          month: 'short',
-          day: '2-digit',
-          weekday: 'long',
-          hour: '2-digit',
-          minute: '2-digit',
+          month: '2-digit',
+          day: '2-digit'
         });
       }
       return dateFormatter.format(date);

@@ -56,9 +56,6 @@ angular.module('app')
       this.hideTags = authManager.getUserPrefValue("hideTags", false);
 
       let width = authManager.getUserPrefValue("notesPanelWidth");
-      if(width) {
-        this.panelController.setWidth(width);
-      }
     }
 
     this.loadPreferences();
@@ -96,7 +93,7 @@ angular.module('app')
     }
 
     let MinNoteHeight = 51.0; // This is the height of a note cell with nothing but the title, which *is* a display option
-    this.DefaultNotesToDisplayValue = (document.documentElement.clientHeight / MinNoteHeight) || 20;
+    this.DefaultNotesToDisplayValue = 2500;
 
     this.paginate = function() {
       this.notesToDisplay += this.DefaultNotesToDisplayValue
@@ -209,6 +206,12 @@ angular.module('app')
     }
 
     this.createNewNote = function() {
+      var date = new Date;
+      date = date.toString().slice(4, 15);
+      var exists = this.sortedNotes.some(note => {
+        return note.created_at.toString().slice(4, 15) == date;
+      });
+      if (exists) return;
       var title = "New Note" + (this.tag.notes ? (" " + (this.tag.notes.length + 1)) : "");
       this.newNote = modelManager.createItem({content_type: "Note", dummy: true, text: ""});
       this.newNote.title = title;
@@ -227,6 +230,14 @@ angular.module('app')
       var filterText = this.noteFilter.text.toLowerCase();
       if(filterText.length == 0) {
         note.visible = true;
+      } else if (filterText.indexOf("today") > -1) {
+        var date = new Date;
+        if (filterText[5] == "-") {
+          date.setDate(date.getDate() - parseInt(filterText.slice(6) || 0));
+        } else if (filterText[5] == "+") {
+          date.setDate(date.getDate() + parseInt(filterText.slice(6) || 0));
+        }
+        note.visible = note.created_at.toString().slice(4, 10) == date.toString().slice(4, 10);
       } else {
         var words = filterText.split(" ");
         var matchesTitle = words.every(function(word) { return  note.safeTitle().toLowerCase().indexOf(word) >= 0; });

@@ -103,10 +103,6 @@ angular.module('app')
         onReady();
       }
 
-      if(note.safeText().length == 0 && note.dummy) {
-        this.focusTitle(100);
-      }
-
       if(oldNote && oldNote != note) {
         if(oldNote.hasChanges) {
           this.save()(oldNote, null);
@@ -210,12 +206,6 @@ angular.module('app')
       }, delay)
     }
 
-    this.focusTitle = function(delay) {
-      setTimeout(function(){
-        document.getElementById("note-title-editor").focus();
-      }, delay)
-    }
-
     this.clickedTextArea = function() {
       this.showMenu = false;
     }
@@ -316,8 +306,8 @@ angular.module('app')
     }
 
     this.deleteNote = function() {
-      let title = this.note.safeTitle().length ? `'${this.note.title}'` : "this note";
-      if(confirm(`Are you sure you want to delete ${title}?`)) {
+      let title = `'${this.note.title}'`;
+      if(confirm(`Are you sure you want to delete this note?`)) {
         this.remove()(this.note);
         this.showMenu = false;
       }

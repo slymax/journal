@@ -32,5 +32,3 @@
         .tag.faded{"ng-if" => "ctrl.archiveTag", "ng-click" => "ctrl.selectTag(ctrl.archiveTag)", "ng-class" => "{'selected' : ctrl.selectedTag == ctrl.archiveTag}"}
           .info
             %input.title{"ng-disabled" => "true", "ng-model" => "ctrl.archiveTag.title"}
-
-  %panel-resizer{"panel-id" => "'tags-column'", "on-resize-finish" => "ctrl.onPanelResize", "control" => "ctrl.panelController", "hoverable" => "true", "collapsable" => "true"}
