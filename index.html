@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app.frontend">
+<html ng-app="app">
   <head>
     <meta charset="utf-8"/>
     <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
@@ -22,6 +22,8 @@
 
     <script>
       window._default_sf_server = "";
+      window._extensions_manager_location = "";
+      window._batch_manager_location = "";
     </script>
 
     <script src="script.js" debug="true"></script>
@@ -30,7 +32,7 @@
   </head>
 
   <body>
-    <div ng-controller="HomeCtrl" ng-include="'frontend/home.html'"></div>
+    <div ng-controller="HomeCtrl" ng-include="'home.html'"></div>
   </body>
 
 </html>
