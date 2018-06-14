@@ -219,15 +219,11 @@ angular.module('app')
         if(success) {
           if(statusTimeout) $timeout.cancel(statusTimeout);
           statusTimeout = $timeout(function(){
-            this.saveError = false;
-            this.syncTakingTooLong = false;
             this.showAllChangesSavedStatus();
           }.bind(this), 200)
         } else {
           if(statusTimeout) $timeout.cancel(statusTimeout);
           statusTimeout = $timeout(function(){
-            this.saveError = true;
-            this.syncTakingTooLong = false;
             this.showErrorStatus();
           }.bind(this), 200)
         }
@@ -267,6 +263,9 @@ angular.module('app')
     }
 
     this.showAllChangesSavedStatus = function() {
+      this.saveError = false;
+      this.syncTakingTooLong = false;
+
       var status = "All changes saved";
       if(authManager.offline()) {
         status += " (offline)";
@@ -275,7 +274,9 @@ angular.module('app')
     }
 
     this.showErrorStatus = function() {
-      this.noteStatus = $sce.trustAsHtml("Error syncing<br>(changes saved offline)")
+      this.saveError = true;
+      this.syncTakingTooLong = false;
+      this.noteStatus = $sce.trustAsHtml("<span class='error bold'>Sync Unreachable</span><br>All changes saved offline")
     }
 
     this.contentChanged = function() {
@@ -315,19 +316,16 @@ angular.module('app')
 
     this.togglePin = function() {
       this.note.setAppDataItem("pinned", !this.note.pinned);
-      this.note.setDirty(true);
       this.changesMade();
     }
 
     this.toggleLockNote = function() {
       this.note.setAppDataItem("locked", !this.note.locked);
-      this.note.setDirty(true);
       this.changesMade();
     }
 
     this.toggleArchiveNote = function() {
       this.note.setAppDataItem("archived", !this.note.archived);
-      this.note.setDirty(true);
       this.changesMade(true);
       $rootScope.$broadcast("noteArchived");
     }
