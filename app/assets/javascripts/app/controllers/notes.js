@@ -219,9 +219,8 @@ angular.module('app')
         return note.created_at.toString().slice(4, 15) == date;
       });
       if (exists) return;
-      var title = "New Note" + (this.tag.notes ? (" " + (this.tag.notes.length + 1)) : "");
       this.newNote = modelManager.createItem({content_type: "Note", dummy: true, text: ""});
-      this.newNote.title = title;
+      this.newNote.title = "";
       this.selectNote(this.newNote);
       this.addNew()(this.newNote);
     }

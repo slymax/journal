@@ -1,7 +1,7 @@
 $red: #ff4444;
 $border: #dddddd;
 $background: #f1f1f1;
-.main-ui-view {
+body {
     font-size: 0.9rem !important;
     *:not(.spinner) {
         border-radius: 0 !important;
@@ -31,6 +31,9 @@ $background: #f1f1f1;
             max-height: calc(100vh - 25px);
             #notes-title-bar {
                 padding-top: 14px;
+                .title {
+                    cursor: default;
+                }
                 .add-button {
                     color: rgba(0, 0, 0, 0.4);
                     background-color: $background;
@@ -85,15 +88,20 @@ $background: #f1f1f1;
                 }
             }
         }
-        #editor-column.editor {
-            max-height: 100%;
-            .editor-content textarea {
-                font-size: 1.1rem;
-                line-height: 1.3rem;
-                font-family: Courier, monospace !important;
-                padding: 11px 15px;
-                overflow-y: auto;
-                margin: 0;
+        #editor-column {
+            &.editor {
+                max-height: 100%;
+                .editor-content textarea {
+                    font-size: 1.1rem;
+                    line-height: 1.3rem;
+                    font-family: Courier, monospace !important;
+                    padding: 11px 15px;
+                    overflow-y: auto;
+                    margin: 0;
+                }
+            }
+            .app-bar .label {
+                margin-top: 1px;
             }
         }
         .app-bar {
@@ -115,12 +123,27 @@ $background: #f1f1f1;
             padding: 1.5rem 2rem 2rem;
         }
     }
+    #password-wizard .content {
+        p {
+            overflow: hidden;
+        }
+        a {
+            float: right;
+            &:hover {
+                text-decoration: none;
+            }
+            &.cancel {
+                float: left;
+                text-align: left;
+            }
+        }
+    }
     .sn-component {
         #account-panel.panel {
             left: 0;
             bottom: 30px;
             width: 300px;
-            height: 472px;
+            height: 455px;
             line-height: 1.3rem;
             box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
             a {

@@ -7,48 +7,11 @@
             %i.icon.ion-locked
             {{ctrl.lockText}}
 
-  #editor-title-bar.section-title-bar{"ng-show" => "ctrl.note && !ctrl.note.errorDecrypting", "ng-class" => "{'locked' : ctrl.note.locked }"}
-    .title
-      %input.input#note-title-editor{"ng-model" => "ctrl.note.title", "ng-keyup" => "$event.keyCode == 13 && ctrl.saveTitle($event)",
-                "ng-change" => "ctrl.nameChanged()", "ng-focus" => "ctrl.onNameFocus()", "ng-blur" => "ctrl.onNameBlur()",
-                "select-on-click" => "true", "ng-disabled" => "ctrl.note.locked"}
-
-    #save-status{"ng-class" => "{'error bold': ctrl.syncTakingTooLong}", "ng-bind-html" => "ctrl.noteStatus"}
-
-    .editor-tags
-      #note-tags-component-container{"ng-if" => "ctrl.tagsComponent"}
-        %component-view.component-view{ "component" => "ctrl.tagsComponent", "ng-style" => "ctrl.note.locked && {'pointer-events' : 'none'}", "ng-class" => "{'locked' : ctrl.note.locked }"}
-      %input.tags-input{"ng-if" => "!(ctrl.tagsComponent && ctrl.tagsComponent.active)", "type" => "text", "ng-keyup" => "$event.keyCode == 13 && $event.target.blur();",
-      "ng-model" => "ctrl.tagsString", "placeholder" => "#tags", "ng-blur" => "ctrl.updateTagsFromTagsString($event, ctrl.tagsString)",
-       "spellcheck" => "false", "ng-disabled" => "ctrl.note.locked"}
-
   .sn-component{"ng-if" => "ctrl.note"}
     .app-bar.no-edges
       .left
-        .item{"ng-click" => "ctrl.showMenu = !ctrl.showMenu; ctrl.showExtensions = false; ctrl.showEditorMenu = false;", "ng-class" => "{'selected' : ctrl.showMenu}", "click-outside" => "ctrl.showMenu = false;", "is-open" => "ctrl.showMenu"}
-          .label Options
-          .menu-panel.dropdown-menu{"ng-if" => "ctrl.showMenu"}
-            .section
-              .header
-                %h4.title Note Options
-              %menu-row{"label" => "ctrl.note.pinned ? 'Unpin' : 'Pin'", "ng-click" => "ctrl.selectedMenuItem($event, true); ctrl.togglePin()", "desc" => "'Pin or unpin a note from the top of your list'"}
-              %menu-row{"label" => "ctrl.note.archived ? 'Unarchive' : 'Archive'", "ng-click" => "ctrl.selectedMenuItem($event, true); ctrl.toggleArchiveNote()", "desc" => "'Archive or unarchive a note from your Archived system tag'"}
-              %menu-row{"label" => "ctrl.note.locked ? 'Unlock' : 'Lock'", "ng-click" => "ctrl.selectedMenuItem($event, true); ctrl.toggleLockNote()", "desc" => "'Locking notes prevents unintentional editing'"}
-              %menu-row{"label" => "'Delete'", "ng-click" => "ctrl.selectedMenuItem($event); ctrl.deleteNote()", "desc" => "'Delete this note permanently from all your devices'"}
-
-            .section{"ng-if" => "!ctrl.selectedEditor"}
-              .header
-                %h4.title Global Display
-              %menu-row{"label" => "'Monospace Font'", "circle" => "ctrl.monospaceFont ? 'success' : 'default'", "ng-click" => "ctrl.selectedMenuItem($event, true); ctrl.toggleKey('monospaceFont')", "desc" => "'Toggles the font style for the default editor'"}
-              %menu-row{"label" => "'Spellcheck'", "circle" => "ctrl.spellcheck ? 'success' : 'default'", "ng-click" => "ctrl.selectedMenuItem($event, true); ctrl.toggleKey('spellcheck')", "desc" => "'Toggles spellcheck for the default editor'"}
-
-        .item{"ng-click" => "ctrl.onEditorMenuClick()", "ng-class" => "{'selected' : ctrl.showEditorMenu}", "click-outside" => "ctrl.showEditorMenu = false;", "is-open" => "ctrl.showEditorMenu"}
-          .label Editor
-          %editor-menu{"ng-if" => "ctrl.showEditorMenu", "callback" => "ctrl.editorMenuOnSelect", "selected-editor" => "ctrl.selectedEditor", "current-item" => "ctrl.note"}
-
-        .item{"ng-click" => "ctrl.showExtensions = !ctrl.showExtensions; ctrl.showMenu = false; ctrl.showEditorMenu = false;", "ng-class" => "{'selected' : ctrl.showExtensions}", "click-outside" => "ctrl.showExtensions = false;", "is-open" => "ctrl.showExtensions"}
-          .label Actions
-          %actions-menu{"ng-if" => "ctrl.showExtensions", "item" => "ctrl.note"}
+        .item{"ng-click" => "ctrl.selectedMenuItem($event); ctrl.deleteNote()"}
+          .label Delete
 
   .editor-content#editor-content{"ng-if" => "ctrl.noteReady && !ctrl.note.errorDecrypting"}
 
@@ -58,8 +21,6 @@
      "ng-change" => "ctrl.contentChanged()", "ng-trim" => "false", "ng-click" => "ctrl.clickedTextArea()",
      "ng-focus" => "ctrl.onContentFocus()", "dir" => "auto", "ng-attr-spellcheck" => "{{ctrl.spellcheck}}"}
       {{ctrl.onSystemEditorLoad()}}
-
-    %panel-resizer{"panel-id" => "'editor-content'", "on-resize-finish" => "ctrl.onPanelResizeFinish","control" => "ctrl.resizeControl", "min-width" => 300, "hoverable" => "true", "property" => "'right'"}
 
   .section{"ng-if" => "ctrl.note.errorDecrypting"}
     %p.medium-padding{"style" => "padding-top: 0 !important;"} There was an error decrypting this item. Ensure you are running the latest version of this app, then sign out and sign back in to try again.

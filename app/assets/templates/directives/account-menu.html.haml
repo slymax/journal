@@ -25,26 +25,17 @@
 
           %a.panel-row.advanced{"ng-click" => "formData.showAdvanced = !formData.showAdvanced"}
             Advanced Options
-          .notification.info{"ng-if" => "formData.showRegister"}
-            %h2.title No Password Reset.
-            .text Because your notes are encrypted using your password, Standard Notes does not have a password reset option. You cannot forget your password.
 
-          .notification.unpadded.default.advanced-options.panel-row{"ng-if" => "formData.showAdvanced"}
-            .panel-column.stretch
-              %h4.title.panel-row.padded-row Advanced Options
-              %div.bordered-row.padded-row
-                %label Sync Server Domain
-                %input.form-control.mt-5{:name => 'server', :placeholder => 'Server URL', :required => true, :type => 'text', 'ng-model' => 'formData.url'}
-              %label.padded-row{"ng-if" => "formData.showLogin"}
-                %input{"type" => "checkbox", "ng-model" => "formData.strictSignin"}
-                  Use strict sign in
-                  %span
-                    %a{"href" => "https://standardnotes.org/help/security", "target" => "_blank"} (Learn more)
+          .advanced-options.panel-row{"ng-if" => "formData.showAdvanced"}
+            %input{:name => 'server', :placeholder => 'Server URL', :required => true, :type => 'text', 'ng-model' => 'formData.url'}
 
           .button-group.stretch.panel-row.form-submit
             %button.button.info.featured{"type" => "submit"}
               .label {{formData.showLogin ? "Sign In" : "Register"}}
 
+          %label{"ng-if" => "formData.showLogin"}
+            %input{"type" => "checkbox", "ng-model" => "formData.strictSignin"}
+            Use strict sign in
           %label
             %input{"type" => "checkbox", "ng-model" => "formData.ephemeral", "ng-true-value" => "false", "ng-false-value" => "true"}
             Stay signed in
@@ -65,11 +56,6 @@
 
       %div{"ng-if" => "!formData.showLogin && !formData.showRegister && !formData.mfa"}
         .panel-section{"ng-if" => "user"}
-          .notification.danger{"ng-if" => "syncStatus.error"}
-            %h2.title Sync Unreachable
-            .text Hmm...we can't seem to sync your account. The reason: {{syncStatus.error.message}}
-            %p
-              %a{"href" => "https://standardnotes.org/help", "target" => "_blank"} Need help?
           .panel-row
             %h2.title.wrap {{user.email}}
 
@@ -78,9 +64,6 @@
           .panel-row
 
           %a.panel-row.condensed{"ng-click" => "openPasswordWizard('change-pw')"} Change Password
-          %a.panel-row.justify-left.condensed.success{"ng-if" => "securityUpdateAvailable", "ng-click" => "openPasswordWizard('upgrade-security')"}
-            .inline.circle.small.success.mr-8
-            .inline Security Update Available
 
         .panel-section
           %h3.title.panel-row Encryption
@@ -147,13 +130,6 @@
               .button-group.stretch.panel-row.form-submit
                 %button.button.info{"type" => "submit"}
                   .label Decrypt & Import
-              %p
-                Importing from backup will overwrite existing notes with matching note from backup. Existing notes not found in the backup will remain as-is and won't be overwritten.
-              %p If you'd like to import only a selection of notes instead of the whole file, please use the Batch Manager extension instead.
-          .panel-row
-            .spinner.small.info{"ng-if" => "importData.loading"}
-    .footer
-      %a.right{"ng-if" => "formData.showLogin || formData.showRegister", "ng-click" => "formData.showLogin = false; formData.showRegister = false;"}
-        Cancel
-      %a.right{"ng-if" => "!formData.showLogin && !formData.showRegister", "ng-click" => "destroyLocalData()"}
-        {{ user ? "Sign out and clear local data" : "Clear all local data" }}
+          %a.right{"ng-if" => "formData.showLogin || formData.showRegister", "ng-click" => "formData.showLogin = false; formData.showRegister = false;"}
+            Cancel
+          %a.right{"ng-if" => "!formData.showLogin && !formData.showRegister", "ng-click" => "destroyLocalData()"} Clear Local Data
